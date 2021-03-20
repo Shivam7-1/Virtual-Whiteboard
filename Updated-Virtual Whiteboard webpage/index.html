@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<link rel="shortcut icon" href="./favicon.ico" type="image/x-icon">    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/c6153d298d.js"></script>
+    <title>Virtual Whiteboard miniproject</title>
+    <script src="./js/infinite-canvas.js"></script>
+</head>
+<body>
+
+    <!--Page onLoad Modal -->
+<div class="modal fade" id="startupModal" tabindex="-1" role="dialog" aria-labelledby="startupModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="startupModalLabel">Tips before starting</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul>
+              <li><b>Unlimited</b> draggable board is added. Click and hold right click and then drag through the board</li>
+              <li><b>You can Download Whatever you Draw</b> </li>
+              <li><b>Lets Now begun!!</b> </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Click Here to Continue</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--Suggestion form modal-->
+  <div class="modal fade" id="suggestionFormModal">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title"><i class="fas fa-envelope"></i> Suggestion Form</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="POST" id="suggestionForm" name="suggestion-form" data-netlify="true">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="form-group col-md-6">
+                  <label for="inputName">Name</label>
+                  <input class="form-control" type="name" name="name" id="inputName" placeholder="Enter name">
+                </div>
+                <div class="form-group col-md-6">
+                  <label for="inputEmail">Email</label>
+                  <input class="form-control" type="email" name="email" id="inputEmail" placeholder="Enter email">
+                </div>
+              </div>
+              <label for="inputEmail">School/College/Organization name</label>
+                  <input class="form-control" type="text" name="inputCollege" id="inputCollege" placeholder="Enter organization name">
+              <label for="inputSuggestion">Your Suggestions</label>
+              <textarea class="form-control" rows="4" name="inputSuggestion" id="inputSuggestion" placeholder="Enter your suggestions here..."></textarea>
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <div id="page">
+
+        <!--sidebar code here-->
+        <div id="sidebar">
+            <div class="toggle-btn" onClick="toggleSidebar()">
+                <span></span><span></span><span></span>
+            </div>
+
+            <ul class="text-left">
+              <li id="header_nav">
+          
+                              </a>
+                <h6 class="h6">Virtual Whiteboard Webpage</h6>
+              </li>
+              <li>
+                <form action="#" class="radio-form" id="radio-form">
+                  <h4 class="h4"><i class="fas fa-chalkboard-teacher"></i> Select board</h4>
+                <div class="radio">
+      <div class="radio">
+                    <label class="h5"><input type="radio" name="optradio" value="#F8F8FF"/>Whiteboard</label>
+                </div>
+                <label class="h5"><input type="radio" name="optradio" value="#202020"  checked/>Blackboard</label>
+                </div>
+               <div class="radio">
+                    <label class="h5"><input type="radio" name="optradio" value="#244D15"/>Greenboard</label>
+                </div>
+                </form>
+              </li>
+              <li>
+                  <h4 class="h4"><i class="fas fa-shapes"></i> Insert shapes</h4>
+                  <ul class="h5 select-shapes">
+                      <li id="straight-line">Straight Line</li>
+                                      </ul>
+              </li>
+              <li>
+                  <a id="downloadAnchor" download="Virtualboard download.png">
+                    <h5 class="h5" id="download-btn"><i class="fas fa-download"></i> Click here Download Virtual Whiteboard Board</h5>
+                  </a>
+              </li>
+              <li>
+              </li>
+                        </ul>
+          </div>
+
+          <!--options bar i.e.toolbar code here-->
+        <div class="options row justify-content-end align-item-center">
+            <div class="colors row">
+                <span id="erase_btn">
+                    <i class="fas fa-eraser fa-2x" style="color: #202020"></i>
+                </span>
+
+                <!--dropdown for selecting thickness of pen-->
+                <select name="thickness" id="select_thickness"
+                onchange="changeThickness(this.options[this.selectedIndex].value)">
+                    <option value="5">1</option>
+                    <option value="6">2</option>
+                    <option value="7">3</option>
+                    <option value="8">4</option>
+                    <option value="9">5</option>
+                    <option value="10">6</option>
+                </select>
+                <!--color buttons for selecting color of pen-->
+                <span id="yellow" class="round" onclick="changeColor('#FFF222')"></span>
+                <span id="blue" class="round" onclick="changeColor('#0ABDE3')"></span>
+                <span id="white" class="round" onclick="changeColor('#FFFFFF')"></span>
+                <span id="black" class="round" onclick="changeColor('#000000')"></span>
+                <input type="button" id="clear_all_btn" class="btn" value="Clear"/>
+            </div>
+        </div>
+
+        <!--main canvas goes here-->
+        <canvas id="canvas"></canvas>
+    </div>
+
+    <div class=" container error-msg text-center">
+      <h2 class="h2">Sorry, this service is currently not optimized for mobile devices!</h2>
+      <h4 class="h4">Kindly use Desktop or laptop.</h4>
+      <h3 class="h3">Inconvenience is deeply regretted!</h3>
+  <script type='text/javascript' src='https://www.freevisitorcounters.com/auth.php?id=1702b6db0c0ad8fb3389a48ec58318f15fa1f116'></script>
+      <script type="text/javascript" src="https://www.freevisitorcounters.com/en/home/counter/731040/t/7"></script>
+    </div>
+    <script src="./js/canvas.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>  </div>
+
+     
+</body>
+</html>
